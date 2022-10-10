@@ -42,9 +42,16 @@ public class Main {
         System.out.println("we slaan een reiziger op.");
         Reiziger pieter = new Reiziger(54,"a", "", "mkj",  java.sql.Date.valueOf("1995-05-01"));
         System.out.println(rdao.findAll());
-        System.out.println("nu is hij opgeslagen");
-        rdao.save(pieter);
+//        System.out.println("nu is hij opgeslagen");
+//        rdao.save(pieter);
+
         System.out.println(rdao.findAll());
-        System.out.println("we gaan nu hem ");
+        System.out.println("we gaan hem nu vinden");
+//        // test 2 de reiziger deleten
+//        rdao.delete(pieter);
+//        System.out.println(rdao.findAll());
+//        System.out.println("De reiziger is verwijderd");
+
+
     }
 }
