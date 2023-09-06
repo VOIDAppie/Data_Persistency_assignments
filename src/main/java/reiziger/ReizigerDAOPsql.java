@@ -41,16 +41,25 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     @Override
     public boolean update(Reiziger reiziger) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE FROM reiziger WHERE reiziger_id = ?");
-            statement.setInt(1, reiziger.getReiziger_id());
-            statement.execute();
-            return true;
+            PreparedStatement statement = connection.prepareStatement("UPDATE reiziger " +
+                    "SET voorletters = ?, " +
+                    "tussenvoegsel = ?, " +
+                    "achternaam = ?, " +
+                    "geboortedatum = ? " +
+                    "WHERE reiziger_id = ?");
 
+            statement.setString(1, reiziger.getVoorletters());
+            statement.setString(2, reiziger.getTussenvoegsel());
+            statement.setString(3, reiziger.getAchternaam());
+            statement.setDate(4, reiziger.getGeboortedatum());
+            statement.setInt(5, reiziger.getReiziger_id());
+            statement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
+
 
     @Override
     public boolean delete(Reiziger reiziger) {
