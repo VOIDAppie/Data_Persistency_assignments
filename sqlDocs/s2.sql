@@ -191,7 +191,7 @@ DELETE FROM uitvoeringen WHERE cursus = 'D&P';
 DELETE FROM cursussen WHERE code = 'D&P';
 DELETE FROM uitvoeringen WHERE locatie = 'LEERDAM';
 INSERT INTO medewerkers (mnr, naam, voorl, functie, chef, gbdatum, maandsal, comm, afd)
-VALUES (7654, 'MARTENS', 'P', 'VERKOPER', 7698, '28-09-1976', 1250, 1400, 30);
+VALUES (7654, 'MARTENS', 'P', 'VERKOPER', 7698, '1976-09-28', 1250, 1400, 30);
 UPDATE medewerkers SET maandsal = 1600 WHERE mnr = 7499;
 UPDATE medewerkers SET maandsal = 1250 WHERE mnr = 7521;
 UPDATE medewerkers SET maandsal = 2850 WHERE mnr = 7698;
