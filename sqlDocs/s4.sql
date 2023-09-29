@@ -40,8 +40,8 @@ WHERE gbdatum < '1980-01-01'
 
 -- S4.2.
 -- Geef de naam van de medewerkers met een tussenvoegsel (b.v. 'van der').
--- DROP VIEW IF EXISTS s4_2; CREATE OR REPLACE VIEW s4_2 AS                                                     -- [TEST]
-
+DROP VIEW IF EXISTS s4_2; CREATE OR REPLACE VIEW s4_2 AS                                                     -- [TEST]
+select * from medewerkers where naam like '% %';
 
 -- S4.3.
 -- Geef nu code, begindatum en aantal inschrijvingen (`aantal_inschrijvingen`) van alle
@@ -103,8 +103,8 @@ FROM medewerkers;
 DROP VIEW IF EXISTS s4_7; CREATE OR REPLACE VIEW s4_7 AS                                                     -- [TEST]
 SELECT
     COUNT(*) as aantal_medewerkers,
-    AVG(comm) as commissie_medewerkers,
-    AVG(CASE WHEN functie = 'VERKOPER' THEN comm ELSE 0 END) as commissie_verkopers
+    sum(comm) / count(*) as commissie_medewerkers,
+    AVG(comm) as commissie_verkopers
 FROM medewerkers;
 
 
