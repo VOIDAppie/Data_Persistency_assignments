@@ -1,6 +1,9 @@
 import adres.Adres;
 import adres.AdresDAO;
 import adres.AdresDAOPsql;
+import ovchipkaart.OvChipKaart;
+import ovchipkaart.OvChipKaartDAO;
+import ovchipkaart.OvChipKaartDAOPsql;
 import reiziger.Reiziger;
 import reiziger.ReizigerDAO;
 import reiziger.ReizigerDAOPsql;
@@ -25,8 +28,10 @@ public class Main {
         ReizigerDAO rdao = new ReizigerDAOPsql(getConnection());
 //        testReizigerDAO(rdao);
         AdresDAO adao = new AdresDAOPsql(getConnection());
+        OvChipKaartDAO odao = new OvChipKaartDAOPsql(getConnection());
         adao.setReizigerDAO(rdao);
-        testAdresDAO(adao , rdao);
+//        testAdresDAO(adao , rdao);
+        testOvChipKaartDAO(odao , rdao);
 
 
 
@@ -78,76 +83,125 @@ public class Main {
 //
 //    }
 
-    private static void testAdresDAO(AdresDAO adao , ReizigerDAO rdao) throws SQLException{
-        //adressen ophalen
-        List<Adres> adressen = adao.findAll();
-        System.out.println("[Test] AdresDAO.findAll() gives the following addresses:");
-        for (Adres a : adressen) {
-            System.out.println(a);
-        }
-        System.out.println();
+//    private static void testAdresDAO(AdresDAO adao , ReizigerDAO rdao) throws SQLException{
+//        //adressen ophalen
+//        List<Adres> adressen = adao.findAll();
+//        System.out.println("[Test] AdresDAO.findAll() gives the following addresses:");
+//        for (Adres a : adressen) {
+//            System.out.println(a);
+//        }
+//        System.out.println();
+//
+//        //create reiziger en adres + koppelen
+//        String gbdatum = "1981-03-14";
+//        Reiziger sietske = new Reiziger(77, "S", "", "Boers", java.sql.Date.valueOf(gbdatum));
+//        rdao.save(sietske);
+//        Adres newAdres = new Adres(77, "1234 AB", "12", "Heidelberglaan", "Utrecht", sietske);
+//
+//        boolean saveSuccess = adao.save(newAdres);
+//        if (saveSuccess) {
+//            System.out.println("Address saved successfully!");
+//            System.out.println(newAdres + "\n");
+//        } else {
+//            System.out.println("Failed to save address.");
+//        }
+//        // read - find address for reiziger
+//        List<Adres> addressesForReiziger = adao.findByReiziger(sietske);
+//        if (!addressesForReiziger.isEmpty()) {
+//            System.out.println("Addresses for Reiziger:");
+//            for (Adres adres : addressesForReiziger) {
+//                System.out.println(adres + "\n");
+//            }
+//        } else {
+//            System.out.println("No addresses found for this Reiziger. \n");
+//        }
+//
+//        // Read - Find an address by ID
+//        Adres foundAdres = adao.findById(77);
+//        if (foundAdres != null) {
+//            System.out.println("Found address: " + foundAdres + "\n");
+//        } else {
+//            System.out.println("Address not found.\n");
+//        }
+//
+//        // Update - Modify an address
+//        newAdres.setStraat("Updated Straat");
+//        boolean updateSuccess = adao.update(newAdres);
+//        if (updateSuccess) {
+//            System.out.println("Address updated successfully!");
+//            System.out.println(newAdres + "\n");
+//        } else {
+//            System.out.println("Failed to update address.");
+//        }
+//
+//        // Delete - Remove an address
+//        boolean deleteSuccessAddress = adao.delete(newAdres);
+//        if (deleteSuccessAddress) {
+//            System.out.println("Address deleted successfully! \n");
+//        } else {
+//            System.out.println("Failed to delete address.");
+//        }
+//
+//        boolean deleteSuccessUser = rdao.delete(sietske);
+//        if (deleteSuccessUser) {
+//            System.out.println("User deleted successfully!");
+//        } else {
+//            System.out.println("Failed to delete user.");
+//        }
 
-        //create reiziger en adres + koppelen
-        String gbdatum = "1981-03-14";
-        Reiziger sietske = new Reiziger(77, "S", "", "Boers", java.sql.Date.valueOf(gbdatum));
-        rdao.save(sietske);
-        Adres newAdres = new Adres(77, "1234 AB", "12", "Heidelberglaan", "Utrecht", sietske);
 
-        boolean saveSuccess = adao.save(newAdres);
-        if (saveSuccess) {
-            System.out.println("Address saved successfully!");
-            System.out.println(newAdres + "\n");
-        } else {
-            System.out.println("Failed to save address.");
-        }
-        // read - find address for reiziger
-        List<Adres> addressesForReiziger = adao.findByReiziger(sietske);
-        if (!addressesForReiziger.isEmpty()) {
-            System.out.println("Addresses for Reiziger:");
-            for (Adres adres : addressesForReiziger) {
-                System.out.println(adres + "\n");
+        private static void testOvChipKaartDAO(OvChipKaartDAO odao, ReizigerDAO rdao) throws SQLException {
+            System.out.println("\n---------- Test OvChipKaartDAO -------------");
+
+            //find all OvChipkaarten
+
+//            List<OvChipKaart> ovChipKaarten = odao.findAll();
+//                    System.out.println("[Test] OvChipkaartDAO.findAll() gives the following ovChipKaarten:");
+//        for (OvChipKaart chipKaarten : ovChipKaarten) {
+//            System.out.println(chipKaarten);
+//        }
+//        System.out.println();
+
+            // Create a new OvChipKaart and persist it in the database
+            String gbdatum = "1981-03-14";
+            String vervalDatum = "2023-12-31";
+            Reiziger siet = new Reiziger(77, "S", "", "Boers", java.sql.Date.valueOf(gbdatum));
+            rdao.save(siet);
+            OvChipKaart ovChipKaart = new OvChipKaart(123, Date.valueOf(vervalDatum), 2, 50.0, siet);
+            boolean saveSuccessOV = odao.save(ovChipKaart);
+
+            if (saveSuccessOV) {
+                System.out.println("OvChipKaart saved successfully!");
+                System.out.println(ovChipKaart + "\n");
+            } else {
+                System.out.println("Failed to save OvChipKaart.");
             }
-        } else {
-            System.out.println("No addresses found for this Reiziger. \n");
+
+            // Read - Find OvChipKaart by ID
+            OvChipKaart foundOvChipKaart = odao.findById(77);
+            if (foundOvChipKaart != null) {
+                System.out.println("Found OvChipKaart: " + foundOvChipKaart + "\n");
+            } else {
+                System.out.println("OvChipKaart not found.\n");
+            }
+
+            ovChipKaart.setSaldo(60.0);
+            boolean updateSuccess = odao.update(ovChipKaart);
+            if (updateSuccess) {
+                System.out.println("OvChipKaart updated successfully!");
+                System.out.println(ovChipKaart + "\n");
+            } else {
+                System.out.println("Failed to update OvChipKaart.");
+            }
+
+            // Delete - Remove an OvChipKaart
+            boolean deleteSuccess = odao.delete(ovChipKaart);
+            if (deleteSuccess) {
+                System.out.println("OvChipKaart deleted successfully! \n");
+            } else {
+                System.out.println("Failed to delete OvChipKaart.");
+            }
+
         }
-
-        // Read - Find an address by ID
-        Adres foundAdres = adao.findById(77);
-        if (foundAdres != null) {
-            System.out.println("Found address: " + foundAdres + "\n");
-        } else {
-            System.out.println("Address not found.\n");
-        }
-
-        // Update - Modify an address
-        newAdres.setStraat("Updated Straat");
-        boolean updateSuccess = adao.update(newAdres);
-        if (updateSuccess) {
-            System.out.println("Address updated successfully!");
-            System.out.println(newAdres + "\n");
-        } else {
-            System.out.println("Failed to update address.");
-        }
-
-        // Delete - Remove an address
-        boolean deleteSuccessAddress = adao.delete(newAdres);
-        if (deleteSuccessAddress) {
-            System.out.println("Address deleted successfully! \n");
-        } else {
-            System.out.println("Failed to delete address.");
-        }
-
-        boolean deleteSuccessUser = rdao.delete(sietske);
-        if (deleteSuccessUser) {
-            System.out.println("User deleted successfully!");
-        } else {
-            System.out.println("Failed to delete user.");
-        }
-
-
-
-
-
-
     }
-}
+

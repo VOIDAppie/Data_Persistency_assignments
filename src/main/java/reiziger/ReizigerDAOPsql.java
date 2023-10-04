@@ -1,5 +1,7 @@
 package reiziger;
 
+import ovchipkaart.OvChipKaart;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,16 +128,50 @@ public class ReizigerDAOPsql implements ReizigerDAO {
                 alleReizigers.add(new Reiziger(resultSet.getInt(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4), resultSet.getDate(5)));
             }
 
-//
-//            int reiziger_id = reiziger.getReizigerId();
-//            String voorletters = reiziger.getVoorletters();
-//            String tussenvoegsel = reiziger.getTussenvoegsel();
-//            String achternaam = reiziger.getAchternaam();
-
         return alleReizigers;
         } catch (Exception e) {
             System.out.println("reizigers niet gevonden " + e.getMessage());
         }
         return null;
     }
+
+
+    public boolean linkOvChipKaart(Reiziger reiziger, OvChipKaart ovChipKaart) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE ov_chip_kaart SET reiziger_id = ? WHERE kaart_nummer = ?");
+            statement.setInt(1, reiziger.getReiziger_id());
+            statement.setInt(2, ovChipKaart.getKaart_nummer());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<OvChipKaart> findOvChipKaartenByReizigerId(int reizigerId) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ov_chip_kaart WHERE reiziger_id = ?");
+            statement.setInt(1, reizigerId);
+            ResultSet resultSet = statement.executeQuery();
+
+            List<OvChipKaart> chipKaarten = new ArrayList<>();
+            while (resultSet.next()) {
+                OvChipKaart ovChipKaart = new OvChipKaart(
+                        resultSet.getInt("kaart_nummer"),
+                        resultSet.getDate("geldig_tot"),
+                        resultSet.getInt("klasse"),
+                        resultSet.getDouble("saldo"),
+                        null  // The Reiziger object is not available here, you'll need to set it later
+                );
+                chipKaarten.add(ovChipKaart);
+            }
+
+            return chipKaarten;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 }
