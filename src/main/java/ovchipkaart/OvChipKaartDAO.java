@@ -13,4 +13,6 @@ public interface OvChipKaartDAO {
     OvChipKaart findById(int id) throws SQLException;
     List<OvChipKaart> findAll()throws SQLException;
     public void setOvChipKaartDAO(OvChipKaartDAO ovChipKaartDAO) throws SQLException ;
+
+    public void setReizigerDAO(ReizigerDAO reizigerDAO) ;
 }

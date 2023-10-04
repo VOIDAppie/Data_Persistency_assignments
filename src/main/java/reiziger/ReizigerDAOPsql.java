@@ -161,7 +161,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
                         resultSet.getDate("geldig_tot"),
                         resultSet.getInt("klasse"),
                         resultSet.getDouble("saldo"),
-                        null  // The Reiziger object is not available here, you'll need to set it later
+                        null
                 );
                 chipKaarten.add(ovChipKaart);
             }

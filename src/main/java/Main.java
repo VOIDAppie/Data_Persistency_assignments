@@ -10,6 +10,7 @@ import reiziger.ReizigerDAOPsql;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Random;
 
 public class Main {
     private static Connection conn = null;
@@ -31,7 +32,10 @@ public class Main {
         OvChipKaartDAO odao = new OvChipKaartDAOPsql(getConnection());
         adao.setReizigerDAO(rdao);
 //        testAdresDAO(adao , rdao);
+        odao.setReizigerDAO(rdao);
         testOvChipKaartDAO(odao , rdao);
+
+
 
 
 
@@ -153,21 +157,14 @@ public class Main {
         private static void testOvChipKaartDAO(OvChipKaartDAO odao, ReizigerDAO rdao) throws SQLException {
             System.out.println("\n---------- Test OvChipKaartDAO -------------");
 
-            //find all OvChipkaarten
-
-//            List<OvChipKaart> ovChipKaarten = odao.findAll();
-//                    System.out.println("[Test] OvChipkaartDAO.findAll() gives the following ovChipKaarten:");
-//        for (OvChipKaart chipKaarten : ovChipKaarten) {
-//            System.out.println(chipKaarten);
-//        }
-//        System.out.println();
-
             // Create a new OvChipKaart and persist it in the database
             String gbdatum = "1981-03-14";
             String vervalDatum = "2023-12-31";
-            Reiziger siet = new Reiziger(77, "S", "", "Boers", java.sql.Date.valueOf(gbdatum));
+            int random_reiziger_id = new Random().nextInt(1000);
+            int random_ovChip_id = new Random().nextInt(1000);
+            Reiziger siet = new Reiziger(random_reiziger_id, "S", "", "Boers", java.sql.Date.valueOf(gbdatum));
             rdao.save(siet);
-            OvChipKaart ovChipKaart = new OvChipKaart(123, Date.valueOf(vervalDatum), 2, 50.0, siet);
+            OvChipKaart ovChipKaart = new OvChipKaart(random_ovChip_id, Date.valueOf(vervalDatum), 2, 50.0, siet);
             boolean saveSuccessOV = odao.save(ovChipKaart);
 
             if (saveSuccessOV) {
@@ -178,13 +175,14 @@ public class Main {
             }
 
             // Read - Find OvChipKaart by ID
-            OvChipKaart foundOvChipKaart = odao.findById(77);
+            OvChipKaart foundOvChipKaart = odao.findById(random_ovChip_id);
             if (foundOvChipKaart != null) {
                 System.out.println("Found OvChipKaart: " + foundOvChipKaart + "\n");
             } else {
                 System.out.println("OvChipKaart not found.\n");
             }
 
+            //update - update the saldo to 60 euro
             ovChipKaart.setSaldo(60.0);
             boolean updateSuccess = odao.update(ovChipKaart);
             if (updateSuccess) {

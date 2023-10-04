@@ -9,7 +9,15 @@ public class OvChipKaart {
     private Date geldig_tot;
     private int klasse;
     private double saldo;
-    private Reiziger reiziger;
+    private int reiziger_id;
+
+    public int getReiziger_id() {
+        return reiziger_id;
+    }
+
+    public void setReiziger_id(int reiziger_id) {
+        this.reiziger_id = reiziger_id;
+    }
 
     // Constructor
     public OvChipKaart(int kaart_nummer, Date geldig_tot, int klasse, double saldo, Reiziger reiziger) {
@@ -17,7 +25,7 @@ public class OvChipKaart {
         this.geldig_tot = geldig_tot;
         this.klasse = klasse;
         this.saldo = saldo;
-        this.reiziger = reiziger;
+        this.reiziger_id = reiziger.getReiziger_id();
     }
 
     // Getters and Setters
@@ -53,15 +61,11 @@ public class OvChipKaart {
         this.saldo = saldo;
     }
 
-    public Reiziger getReiziger() {
-        return reiziger;
-    }
 
     public void setReiziger(Reiziger reiziger) {
-        this.reiziger = reiziger;
+        this.reiziger_id = reiziger.getReiziger_id();
     }
 
-    // toString method
     @Override
     public String toString() {
         return "OvChipKaart{" +
@@ -69,7 +73,7 @@ public class OvChipKaart {
                 ", geldig_tot=" + geldig_tot +
                 ", klasse=" + klasse +
                 ", saldo=" + saldo +
-                ", reiziger=" + reiziger +
+                ", reiziger_id=" + reiziger_id +
                 '}';
     }
 }
