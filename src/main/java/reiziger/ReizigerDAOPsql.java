@@ -78,24 +78,30 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     }
 
     @Override
-    public Reiziger findById(int id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM reiziger WHERE reiziger_id = ?");
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
+    public Reiziger findById(int id) throws SQLException {
+        Reiziger r = null;
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM reiziger WHERE reiziger_id = ?");
+        statement.setInt(1, id);
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            r = new Reiziger();
+            r.setReiziger_id(resultSet.getInt(1));
+            r.setVoorletters(resultSet.getString(2));
+            r.setTussenvoegsel(resultSet.getString(3));
+            r.setAchternaam(resultSet.getString(4));
+            r.setGeboortedatum(resultSet.getDate(5));
+        }
+        return r;
+    }
 
+
+//            resultSet.next();
+//
 //            String voorletters = resultSet.getString(2);
 //            String tussenvoegsel = resultSet.getString(3);
 //            String achternaam = resultSet.getString(4);
 //            Date geboortedatum = resultSet.getDate(5);
-
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
+//            }
 
     @Override
     public List<Reiziger> findByGbDatum(String datum) {

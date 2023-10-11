@@ -27,13 +27,14 @@ public class Main {
     }
     public static void main(String[] args) throws SQLException {
         ReizigerDAO rdao = new ReizigerDAOPsql(getConnection());
-//        testReizigerDAO(rdao);
         AdresDAO adao = new AdresDAOPsql(getConnection());
         OvChipKaartDAO odao = new OvChipKaartDAOPsql(getConnection());
         adao.setReizigerDAO(rdao);
-//        testAdresDAO(adao , rdao);
         odao.setReizigerDAO(rdao);
         testOvChipKaartDAO(odao , rdao);
+        //        testReizigerDAO(rdao);
+        //        testAdresDAO(adao , rdao);
+
 
 
 
