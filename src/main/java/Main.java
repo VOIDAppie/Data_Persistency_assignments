@@ -1,3 +1,6 @@
+import Product.Product;
+import Product.ProductDAO;
+import Product.ProductDAOPsql;
 import adres.Adres;
 import adres.AdresDAO;
 import adres.AdresDAOPsql;
@@ -29,9 +32,13 @@ public class Main {
         ReizigerDAO rdao = new ReizigerDAOPsql(getConnection());
         AdresDAO adao = new AdresDAOPsql(getConnection());
         OvChipKaartDAO odao = new OvChipKaartDAOPsql(getConnection());
+        ProductDAO pdao = new ProductDAOPsql(getConnection());
+
         adao.setReizigerDAO(rdao);
         odao.setReizigerDAO(rdao);
+//        pdao.setOvChipkaartDAO(odao);
         testOvChipKaartDAO(odao , rdao);
+        testProductDAO(pdao);
         //        testReizigerDAO(rdao);
         //        testAdresDAO(adao , rdao);
 
@@ -199,6 +206,45 @@ public class Main {
                 System.out.println("OvChipKaart deleted successfully! \n");
             } else {
                 System.out.println("Failed to delete OvChipKaart.");
+            }
+
+        }
+        private static void testProductDAO(ProductDAO pdao) throws SQLException {
+            System.out.println("\n---------- Test ProductDAO -------------");
+            // Create a new Product
+            int random_product_nummer = new Random().nextInt(1000);
+            Product product = new Product(random_product_nummer, "OV", "Description", 20.0);
+            boolean saveSuccessProduct = pdao.save(product);
+
+            if (saveSuccessProduct) {
+                System.out.println("Product saved successfully!");
+                System.out.println(product + "\n");
+            } else {
+                System.out.println("Failed to save Product.");
+            }
+
+            Product foundProduct = pdao.findById(random_product_nummer);
+            if (foundProduct != null) {
+                System.out.println("Found Product: " + foundProduct + "\n");
+            } else {
+                System.out.println("Product not found.\n");
+            }
+
+            // Update - Update the product price to 25.0 euro
+            product.setPrijs(25.0);
+            boolean updateSuccess = pdao.update(product);
+            if (updateSuccess) {
+                System.out.println("Product updated successfully!");
+                System.out.println(product + "\n");
+            } else {
+                System.out.println("Failed to update Product.");
+            }
+
+            boolean deleteSuccess = pdao.delete(product);
+            if (deleteSuccess) {
+                System.out.println("Product deleted successfully! \n");
+            } else {
+                System.out.println("Failed to delete Product.");
             }
 
         }

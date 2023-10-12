@@ -1,8 +1,11 @@
 package ovchipkaart;
 
+import Product.Product;
 import reiziger.Reiziger;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OvChipKaart {
     private int kaart_nummer;
@@ -10,6 +13,8 @@ public class OvChipKaart {
     private int klasse;
     private double saldo;
     private int reiziger_id;
+
+    private List<Product> producten;
 
     public int getReiziger_id() {
         return reiziger_id;
@@ -26,6 +31,7 @@ public class OvChipKaart {
         this.klasse = klasse;
         this.saldo = saldo;
         this.reiziger_id = reiziger.getReiziger_id();
+        this.producten = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -65,6 +71,19 @@ public class OvChipKaart {
     public void setReiziger(Reiziger reiziger) {
         this.reiziger_id = reiziger.getReiziger_id();
     }
+
+    public List<Product> getProducten() {
+        return producten;
+    }
+
+    public void addProduct(Product product) {
+        this.producten.add(product);
+    }
+
+    public void removeProduct(Product product) {
+        this.producten.remove(product);
+    }
+
 
     @Override
     public String toString() {
