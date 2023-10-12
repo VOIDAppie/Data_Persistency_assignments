@@ -1,7 +1,6 @@
 import Product.Product;
 import Product.ProductDAO;
 import Product.ProductDAOPsql;
-import adres.Adres;
 import adres.AdresDAO;
 import adres.AdresDAOPsql;
 import ovchipkaart.OvChipKaart;
@@ -12,7 +11,6 @@ import reiziger.ReizigerDAO;
 import reiziger.ReizigerDAOPsql;
 
 import java.sql.*;
-import java.util.List;
 import java.util.Random;
 
 public class Main {
@@ -223,7 +221,7 @@ public class Main {
                 System.out.println("Failed to save Product.");
             }
 
-            Product foundProduct = pdao.findById(random_product_nummer);
+            Product foundProduct = pdao.findByOvChipKaart(random_product_nummer);
             if (foundProduct != null) {
                 System.out.println("Found Product: " + foundProduct + "\n");
             } else {

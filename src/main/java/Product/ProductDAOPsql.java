@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ProductDAOPsql implements ProductDAO {
 
@@ -61,20 +62,10 @@ public class ProductDAOPsql implements ProductDAO {
     }
 
     @Override
-    public Product findById(int id) throws SQLException {
-        Product p = null;
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM product WHERE product_nummer = ?");
-        statement.setInt(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            p = new Product();
-            p.setProduct_nummer(resultSet.getInt(1));
-            p.setNaam(resultSet.getString(2));
-            p.setBeschrijving(resultSet.getString(3));
-            p.setPrijs(resultSet.getInt(4));
-
-        }
-        return p;
+    public List<Product> findByOvChipKaart(OvChipKaart ov) throws SQLException {
+        String selectQuery = "SELECT * FROM product" +
+                "JOIN ov_chipkaart_product ON product.product_nummer = ov_chipkaart_product.product_nummer" +
+                "JOIN ov_chipkaart ON ov_chipkaart.kaart_nummer = ov_chipkaart_product.kaart_nummer WHERE "
     }
 
 

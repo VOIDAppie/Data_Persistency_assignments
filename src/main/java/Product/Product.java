@@ -11,14 +11,13 @@ public class Product {
     private String beschrijving;
     private double prijs;
 
-    private List<OvChipKaart> ovChipkaarten;
+    private List<Integer> ovChipkaarten_ids = new ArrayList<>();
 
     public Product(int product_nummer, String naam, String beschrijving, double prijs) {
         this.product_nummer = product_nummer;
         this.naam = naam;
         this.beschrijving = beschrijving;
         this.prijs = prijs;
-        this.ovChipkaarten = new ArrayList<>();
     }
 
     public Product() {
@@ -57,17 +56,17 @@ public class Product {
         this.prijs = prijs;
     }
 
-    public List<OvChipKaart> getOVChipkaarten() {
-        return ovChipkaarten;
-    }
-
-    public void addOVChipkaart(OvChipKaart ovChipkaart) {
-        this.ovChipkaarten.add(ovChipkaart);
-    }
-
-    public void removeOVChipkaart(OvChipKaart ovChipkaart) {
-        this.ovChipkaarten.remove(ovChipkaart);
-    }
+//    public List<OvChipKaart> getOVChipkaarten() {
+//        return ovChipkaarten;
+//    }
+//
+//    public void addOVChipkaart(OvChipKaart ovChipkaart) {
+//        this.ovChipkaarten.add(ovChipkaart);
+//    }
+//
+//    public void removeOVChipkaart(OvChipKaart ovChipkaart) {
+//        this.ovChipkaarten.remove(ovChipkaart);
+//    }
 
     @Override
     public String toString() {
@@ -76,7 +75,7 @@ public class Product {
                 ", naam='" + naam + '\'' +
                 ", beschrijving='" + beschrijving + '\'' +
                 ", prijs=" + prijs +
-                ", ovChipkaarten=" + ovChipkaarten +
+
                 '}';
     }
 }

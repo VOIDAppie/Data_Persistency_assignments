@@ -14,7 +14,7 @@ public class OvChipKaart {
     private double saldo;
     private int reiziger_id;
 
-    private List<Product> producten;
+    private List<Integer> producten_id = new ArrayList<>();
 
     public int getReiziger_id() {
         return reiziger_id;
@@ -31,7 +31,7 @@ public class OvChipKaart {
         this.klasse = klasse;
         this.saldo = saldo;
         this.reiziger_id = reiziger.getReiziger_id();
-        this.producten = new ArrayList<>();
+
     }
 
     // Getters and Setters
@@ -72,17 +72,17 @@ public class OvChipKaart {
         this.reiziger_id = reiziger.getReiziger_id();
     }
 
-    public List<Product> getProducten() {
-        return producten;
-    }
-
-    public void addProduct(Product product) {
-        this.producten.add(product);
-    }
-
-    public void removeProduct(Product product) {
-        this.producten.remove(product);
-    }
+//    public List<Product> getProducten() {
+//        return producten;
+//    }
+//
+//    public void addProduct(Product product) {
+//        this.producten.add(product);
+//    }
+//
+//    public void removeProduct(Product product) {
+//        this.producten.remove(product);
+//    }
 
 
     @Override
