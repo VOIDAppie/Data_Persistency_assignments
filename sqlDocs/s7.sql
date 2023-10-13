@@ -111,6 +111,6 @@ Het verschil is dat hij nu voor de quantity geen sequence scan meer doet waardoo
 
 
 -- S7.3.C
-De query zou sneller kunnen door geen subquery te gebruiken.
+De query zou sneller kunnen door geen subquery te gebruiken. Maar door een JOIN te gebruiken
 
 
