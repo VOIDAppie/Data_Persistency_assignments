@@ -36,7 +36,7 @@ public class Main {
         odao.setReizigerDAO(rdao);
 //        pdao.setOvChipkaartDAO(odao);
         testOvChipKaartDAO(odao , rdao);
-        testProductDAO(pdao);
+        testProductDAO(pdao, rdao, odao);
         //        testReizigerDAO(rdao);
         //        testAdresDAO(adao , rdao);
 
@@ -207,12 +207,22 @@ public class Main {
             }
 
         }
-        private static void testProductDAO(ProductDAO pdao) throws SQLException {
+        private static void testProductDAO(ProductDAO pdao , ReizigerDAO rdao, OvChipKaartDAO odao) throws SQLException {
             System.out.println("\n---------- Test ProductDAO -------------");
             // Create a new Product
             int random_product_nummer = new Random().nextInt(1000);
+            int random_reiziger_nummer = new Random().nextInt(1000);
+            int random_ov_nummer = new Random().nextInt(1000);
+
+            String gbdatum = "1981-03-14";
+            String vervalDatum = "2023-03-01";
+
             Product product = new Product(random_product_nummer, "OV", "Description", 20.0);
+            Reiziger reiziger = new Reiziger(random_reiziger_nummer, "B", "", "Elcik", Date.valueOf(gbdatum));
+            OvChipKaart ovChipKaart = new OvChipKaart(random_ov_nummer, Date.valueOf(vervalDatum), 2, 50, reiziger);
             boolean saveSuccessProduct = pdao.save(product);
+            boolean saveSuccessReiziger = rdao.save(reiziger);
+            boolean saveSuccessOvChipKaart = odao.save(ovChipKaart);
 
             if (saveSuccessProduct) {
                 System.out.println("Product saved successfully!");
@@ -221,11 +231,24 @@ public class Main {
                 System.out.println("Failed to save Product.");
             }
 
-            Product foundProduct = pdao.findByOvChipKaart(random_product_nummer);
-            if (foundProduct != null) {
-                System.out.println("Found Product: " + foundProduct + "\n");
+            if (saveSuccessReiziger) {
+                System.out.println("Reiziger saved successfully!");
+                System.out.println(product + "\n");
             } else {
-                System.out.println("Product not found.\n");
+                System.out.println("Failed to save Reiziger.");
+            }
+
+            if (saveSuccessOvChipKaart) {
+                System.out.println("ovChipKaart saved successfully!");
+                System.out.println(product + "\n");
+            } else {
+                System.out.println("Failed to save OvChipKaart.");
+            }
+            //search ov by product
+
+            ovChipKaart.getProducten_id().add(product.getProduct_nummer());
+            for (Product product1 : pdao.findByOvChipKaart(ovChipKaart)) {
+                System.out.println("this is the ovChipkaart" + product1);
             }
 
             // Update - Update the product price to 25.0 euro

@@ -85,6 +85,10 @@ public class OvChipKaart {
 //    }
 
 
+    public List<Integer> getProducten_id() {
+        return producten_id;
+    }
+
     @Override
     public String toString() {
         return "OvChipKaart{" +

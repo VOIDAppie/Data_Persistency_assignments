@@ -68,6 +68,10 @@ public class Product {
 //        this.ovChipkaarten.remove(ovChipkaart);
 //    }
 
+    public List<Integer> getOvChipkaarten_ids() {
+        return ovChipkaarten_ids;
+    }
+
     @Override
     public String toString() {
         return "Product{" +

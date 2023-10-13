@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAOPsql implements ProductDAO {
@@ -63,9 +64,29 @@ public class ProductDAOPsql implements ProductDAO {
 
     @Override
     public List<Product> findByOvChipKaart(OvChipKaart ov) throws SQLException {
-        String selectQuery = "SELECT * FROM product" +
-                "JOIN ov_chipkaart_product ON product.product_nummer = ov_chipkaart_product.product_nummer" +
-                "JOIN ov_chipkaart ON ov_chipkaart.kaart_nummer = ov_chipkaart_product.kaart_nummer WHERE "
+        String selectQuery = "SELECT * FROM product " +
+                "JOIN ov_chipkaart_product " +
+                "ON " + "product.product_nummer = ov_chipkaart_product.product_nummer " +
+                "JOIN ov_chipkaart " +
+                "ON ov_chipkaart.kaart_nummer = ov_chipkaart_product.kaart_nummer " +
+                "WHERE ov_chipkaart.kaart_nummer = ?";;
+
+        PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+
+        preparedStatement.setInt(1, ov.getKaart_nummer());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Product> products = new ArrayList<>();
+
+        while (resultSet.next()) {
+            Product product = new Product(0, null, null, 0);
+            product.setProduct_nummer(resultSet.getInt("product_nummer"));
+            product.setNaam(resultSet.getString("naam"));
+            product.setBeschrijving(resultSet.getString("beschrijving"));
+            product.setPrijs(resultSet.getInt("prijs"));
+            products.add(product);
+        }
+        return products;
     }
 
 
